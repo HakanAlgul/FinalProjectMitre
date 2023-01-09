@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+}
+
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+  
+
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form>
+                        <!-- Form Group (username)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
+                            <input class="form-control" name="username" id="inputUsername" type="text" placeholder="Enter your username" value="username">
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1">Password</label>
+                                <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Enter your password" value="password">
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1">Confirm Password</label>
+                                <input class="form-control" id="inputConfirmPassword" type="password" placeholder="Confirm Password" value="Password">
+                            </div>
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputComName">Company name</label>
+                                <input class="form-control" name="companyname" id="inputComName" type="text" placeholder="Enter your company name" value="Company Name">
+                            </div>
+                            <!-- Form Group (location)-->
+
+                        </div>
+                        <!-- Form Group (email address)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                            <input class="form-control" name="email" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="name@example.com">
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputPhone">Phone number</label>
+                                <input class="form-control" name="phone" id="inputPhone" type="tel" placeholder="Enter your phone number" value="555-123-4567">
+                            </div>
+
+                        </div>
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
