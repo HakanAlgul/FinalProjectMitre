@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Diagnostics;
 
 namespace FinalProjectMitre.Controllers
 {
@@ -24,18 +25,26 @@ namespace FinalProjectMitre.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection form)
         {
-            MitreAttackEntities1 db = new MitreAttackEntities1();
-            Accounts model = new Accounts();
-            Customers models = new Customers();
-            model.username = form["UserName"].Trim();
-            model.password = form["Password"].Trim();
-            models.email = form["Email"].Trim();
-            models.name = form["CompanyName"].Trim();
-            models.phone = form["PhoneNumber"].Trim();
-            db.Accounts.Add(model);
-            db.Customers.Add(models);
-            db.SaveChanges();
-
+            try
+            {
+                MitreEntities db = new MitreEntities();
+                Accounts account = new Accounts();
+                Customers customer = new Customers();
+                account.username = form["username"].Trim();
+                account.password = form["password"].Trim();
+                customer.email = form["email"].Trim();
+                customer.name = form["companyName"].Trim();
+                customer.phone = form["phone"].Trim();
+                Accounts newAccount = db.Accounts.Add(account);
+                db.SaveChanges();
+                customer.account_id = newAccount.id;
+                db.Customers.Add(customer);
+                db.SaveChanges();
+            }
+            catch (Exception error)
+            {
+                Debug.WriteLine(error.Message);
+            }
             return View();
         }
     }

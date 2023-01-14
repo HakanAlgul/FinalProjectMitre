@@ -13,10 +13,10 @@ namespace FinalProjectMitre.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MitreAttackEntities1 : DbContext
+    public partial class MitreEntities : DbContext
     {
-        public MitreAttackEntities1()
-            : base("name=MitreAttackEntities1")
+        public MitreEntities()
+            : base("name=MitreEntities")
         {
         }
     
@@ -26,12 +26,11 @@ namespace FinalProjectMitre.Models
         }
     
         public virtual DbSet<Accounts> Accounts { get; set; }
-        public virtual DbSet<Customers> Customers { get; set; }
-        public virtual DbSet<MAC_Addresses> MAC_Addresses { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Attacks> Attacks { get; set; }
         public virtual DbSet<Credentials_From_Password_Stores> Credentials_From_Password_Stores { get; set; }
+        public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Hardware_Additions> Hardware_Additions { get; set; }
         public virtual DbSet<Harmful_Applications> Harmful_Applications { get; set; }
+        public virtual DbSet<MAC_Addresses> MAC_Addresses { get; set; }
     }
 }

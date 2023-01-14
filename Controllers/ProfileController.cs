@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinalProjectMitre.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,7 @@ namespace FinalProjectMitre.Controllers
     public class ProfileController : Controller
     {
         // GET: Profile
-        MitreAttackEntities1 db = new MitreAttackEntities1();
+        MitreEntities db = new MitreEntities();
 
         public ActionResult Index()
         {
@@ -17,7 +18,7 @@ namespace FinalProjectMitre.Controllers
         }
         public ActionResult CustomerInfo(int id)
         {
-            var customer = db.Customers.Find(customer_id);
+            var customer = db.Customers.Find(id);
             return View("P");
         }
 

@@ -5,13 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Diagnostics;
 
 namespace FinalProjectMitre.Controllers
 {
     
     public class SecurityController : Controller
     {
-        MitreAttackEntities1 db = new MitreAttackEntities1();
+        MitreEntities db = new MitreEntities();
         // GET: Security
         [AllowAnonymous]//Security e sadece izin verdi
         public ActionResult Login()
@@ -22,15 +23,23 @@ namespace FinalProjectMitre.Controllers
         [HttpPost]
         public ActionResult Login(Accounts accounts)
         {
-            var accountDb = db.Accounts.FirstOrDefault(x => x.username == accounts.username && x.password == accounts.password);
-            if (accountDb != null)
+            try
             {
-                FormsAuthentication.SetAuthCookie(accounts.username, false);
-                return RedirectToAction("Index", "Home");
+                var accountDb = db.Accounts.FirstOrDefault(x => x.username == accounts.username && x.password == accounts.password);
+                if (accountDb != null)
+                {
+                    FormsAuthentication.SetAuthCookie(accounts.username, false);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.Mesaj = "Username or password is incorrect..!";
+                }
             }
-            else
+            catch (Exception error)
             {
-                ViewBag.Mesaj = "Username or password is incorrect..!";
+                Debug.WriteLine(error.Message);
+                throw;
             }
             return View();
         }

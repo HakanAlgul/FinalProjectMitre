@@ -14,11 +14,17 @@ namespace FinalProjectMitre.Models
     
     public partial class Accounts
     {
-        public static string UserName { get; internal set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Accounts()
+        {
+            this.Customers = new HashSet<Customers>();
+        }
+    
         public int id { get; set; }
         public string username { get; set; }
         public string password { get; set; }
     
-        public virtual Customers Customers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customers> Customers { get; set; }
     }
 }

@@ -1,0 +1,26 @@
+﻿@model List<FinalProjectMitre.Models.Hardware_Additions>
+@{
+    ViewBag.Title = "Hardware";
+}
+
+<h2>Hardware</h2>
+
+@foreach (var item in Model)
+{
+<tr>
+
+    <td>
+        @item.result
+    </td>
+    <td>
+        @item.checked_device
+    </td>
+    <td>
+        @item.customer_id
+    </td>
+    <td>
+        @item.date
+    </td>
+
+</tr>
+}

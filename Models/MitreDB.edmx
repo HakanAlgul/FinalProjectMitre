@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MitreAttackModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MitreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="id" />
@@ -13,68 +13,47 @@
           <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MitreAttack.dbo.Attacks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Attacks">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="information" />
-            <PropertyRef Name="type" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="information" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MitreAttack.dbo.Credentials_From_Password_Stores' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Credentials_From_Password_Stores">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="result" />
-            <PropertyRef Name="filename" />
-            <PropertyRef Name="username" />
-            <PropertyRef Name="date" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="result" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="filename" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="customer_id" Type="int" Nullable="false" />
           <Property Name="date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
-            <PropertyRef Name="customer_id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="customer_id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="account_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="account_id" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MitreAttack.dbo.Hardware_Additions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Hardware_Additions">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="result" />
-            <PropertyRef Name="checked_device" />
-            <PropertyRef Name="username" />
-            <PropertyRef Name="date" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="result" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="checked_device" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="checked_device" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="customer_id" Type="int" Nullable="false" />
           <Property Name="date" Type="date" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MitreAttack.dbo.Harmful_Applications' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Harmful_Applications">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
@@ -87,81 +66,70 @@ warning 6002: The table/view 'MitreAttack.dbo.Harmful_Applications' does not hav
           <Property Name="mac_address" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="date" Type="date" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Credentials_From_Password_Stores_Accounts' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Credentials_From_Password_Stores_Accounts" />-->
+        <Association Name="FK_Credentials_From_Password_Stores_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Credentials_From_Password_Stores" Type="Self.Credentials_From_Password_Stores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Credentials_From_Password_Stores">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Customers_Accounts">
-          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1" />
-          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Accounts">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Customers">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hardware_Additions_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Hardware_Additions" Type="Self.Hardware_Additions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Hardware_Additions">
               <PropertyRef Name="customer_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Hardware_Additions_Accounts' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Hardware_Additions_Accounts" />-->
-        <EntityContainer Name="MitreAttackModelStoreContainer">
+        <EntityContainer Name="MitreModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attacks" EntityType="Self.Attacks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Credentials_From_Password_Stores" EntityType="Self.Credentials_From_Password_Stores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hardware_Additions" EntityType="Self.Hardware_Additions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Harmful_Applications" EntityType="Self.Harmful_Applications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MAC_Addresses" EntityType="Self.MAC_Addresses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Attacks" EntityType="Self.Attacks" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Attacks].[id] AS [id], 
-    [Attacks].[name] AS [name], 
-    [Attacks].[information] AS [information], 
-    [Attacks].[type] AS [type]
-    FROM [dbo].[Attacks] AS [Attacks]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Credentials_From_Password_Stores" EntityType="Self.Credentials_From_Password_Stores" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Credentials_From_Password_Stores].[id] AS [id], 
-    [Credentials_From_Password_Stores].[result] AS [result], 
-    [Credentials_From_Password_Stores].[filename] AS [filename], 
-    [Credentials_From_Password_Stores].[username] AS [username], 
-    [Credentials_From_Password_Stores].[date] AS [date]
-    FROM [dbo].[Credentials_From_Password_Stores] AS [Credentials_From_Password_Stores]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Hardware_Additions" EntityType="Self.Hardware_Additions" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Hardware_Additions].[id] AS [id], 
-    [Hardware_Additions].[result] AS [result], 
-    [Hardware_Additions].[checked_device] AS [checked_device], 
-    [Hardware_Additions].[username] AS [username], 
-    [Hardware_Additions].[date] AS [date]
-    FROM [dbo].[Hardware_Additions] AS [Hardware_Additions]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Harmful_Applications" EntityType="Self.Harmful_Applications" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Harmful_Applications].[id] AS [id], 
-    [Harmful_Applications].[name] AS [name]
-    FROM [dbo].[Harmful_Applications] AS [Harmful_Applications]</DefiningQuery>
-          </EntitySet>
+          <AssociationSet Name="FK_Credentials_From_Password_Stores_Customers" Association="Self.FK_Credentials_From_Password_Stores_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Credentials_From_Password_Stores" EntitySet="Credentials_From_Password_Stores" />
+          </AssociationSet>
           <AssociationSet Name="FK_Customers_Accounts" Association="Self.FK_Customers_Accounts">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hardware_Additions_Customers" Association="Self.FK_Hardware_Additions_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Hardware_Additions" EntitySet="Hardware_Additions" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MitreAttackModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="MitreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="id" />
@@ -171,41 +139,9 @@ warning 6035: The relationship 'FK_Hardware_Additions_Accounts' has columns that
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Customers_Accounts" FromRole="Accounts" ToRole="Customers" />
         </EntityType>
-        <EntityType Name="Customers">
-          <Key>
-            <PropertyRef Name="customer_id" />
-          </Key>
-          <Property Name="customer_id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="account_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Accounts" Relationship="Self.FK_Customers_Accounts" FromRole="Customers" ToRole="Accounts" />
-        </EntityType>
-        <EntityType Name="MAC_Addresses">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="mac_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="Attacks">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="information" />
-            <PropertyRef Name="type" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -215,63 +151,109 @@ warning 6035: The relationship 'FK_Hardware_Additions_Accounts' has columns that
         <EntityType Name="Credentials_From_Password_Stores">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="result" />
-            <PropertyRef Name="filename" />
-            <PropertyRef Name="username" />
-            <PropertyRef Name="date" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="result" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="filename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="customer_id" Type="Int32" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Credentials_From_Password_Stores_Customers" FromRole="Credentials_From_Password_Stores" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="account_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Customers_Accounts" FromRole="Customers" ToRole="Accounts" />
+          <NavigationProperty Name="Credentials_From_Password_Stores" Relationship="Self.FK_Credentials_From_Password_Stores_Customers" FromRole="Customers" ToRole="Credentials_From_Password_Stores" />
+          <NavigationProperty Name="Hardware_Additions" Relationship="Self.FK_Hardware_Additions_Customers" FromRole="Customers" ToRole="Hardware_Additions" />
         </EntityType>
         <EntityType Name="Hardware_Additions">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="result" />
-            <PropertyRef Name="checked_device" />
-            <PropertyRef Name="username" />
-            <PropertyRef Name="date" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="result" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="checked_device" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="checked_device" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="customer_id" Type="Int32" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Hardware_Additions_Customers" FromRole="Hardware_Additions" ToRole="Customers" />
         </EntityType>
         <EntityType Name="Harmful_Applications">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
+        <EntityType Name="MAC_Addresses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mac_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
         <Association Name="FK_Customers_Accounts">
-          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1" />
-          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Accounts">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Customers">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Credentials_From_Password_Stores_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Credentials_From_Password_Stores" Type="Self.Credentials_From_Password_Stores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Credentials_From_Password_Stores">
               <PropertyRef Name="customer_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MitreAttackEntities1" annotation:LazyLoadingEnabled="true">
+        <Association Name="FK_Hardware_Additions_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Hardware_Additions" Type="Self.Hardware_Additions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Hardware_Additions">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MitreEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" />
-          <EntitySet Name="Customers" EntityType="Self.Customers" />
-          <EntitySet Name="MAC_Addresses" EntityType="Self.MAC_Addresses" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Attacks" EntityType="Self.Attacks" />
           <EntitySet Name="Credentials_From_Password_Stores" EntityType="Self.Credentials_From_Password_Stores" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
           <EntitySet Name="Hardware_Additions" EntityType="Self.Hardware_Additions" />
           <EntitySet Name="Harmful_Applications" EntityType="Self.Harmful_Applications" />
+          <EntitySet Name="MAC_Addresses" EntityType="Self.MAC_Addresses" />
           <AssociationSet Name="FK_Customers_Accounts" Association="Self.FK_Customers_Accounts">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Credentials_From_Password_Stores_Customers" Association="Self.FK_Credentials_From_Password_Stores_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Credentials_From_Password_Stores" EntitySet="Credentials_From_Password_Stores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hardware_Additions_Customers" Association="Self.FK_Hardware_Additions_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Hardware_Additions" EntitySet="Hardware_Additions" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -279,9 +261,9 @@ warning 6035: The relationship 'FK_Hardware_Additions_Accounts' has columns that
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MitreAttackModelStoreContainer" CdmEntityContainer="MitreAttackEntities1">
+        <EntityContainerMapping StorageEntityContainer="MitreModelStoreContainer" CdmEntityContainer="MitreEntities">
           <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="MitreAttackModel.Accounts">
+            <EntityTypeMapping TypeName="MitreModel.Accounts">
               <MappingFragment StoreEntitySet="Accounts">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="username" ColumnName="username" />
@@ -289,39 +271,8 @@ warning 6035: The relationship 'FK_Hardware_Additions_Accounts' has columns that
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="MitreAttackModel.Customers">
-              <MappingFragment StoreEntitySet="Customers">
-                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MAC_Addresses">
-            <EntityTypeMapping TypeName="MitreAttackModel.MAC_Addresses">
-              <MappingFragment StoreEntitySet="MAC_Addresses">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="mac_address" ColumnName="mac_address" />
-                <ScalarProperty Name="date" ColumnName="date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="MitreAttackModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Attacks">
-            <EntityTypeMapping TypeName="MitreAttackModel.Attacks">
+            <EntityTypeMapping TypeName="MitreModel.Attacks">
               <MappingFragment StoreEntitySet="Attacks">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -331,32 +282,51 @@ warning 6035: The relationship 'FK_Hardware_Additions_Accounts' has columns that
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Credentials_From_Password_Stores">
-            <EntityTypeMapping TypeName="MitreAttackModel.Credentials_From_Password_Stores">
+            <EntityTypeMapping TypeName="MitreModel.Credentials_From_Password_Stores">
               <MappingFragment StoreEntitySet="Credentials_From_Password_Stores">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="result" ColumnName="result" />
-                <ScalarProperty Name="filename" ColumnName="filename" />
-                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
                 <ScalarProperty Name="date" ColumnName="date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="MitreModel.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Hardware_Additions">
-            <EntityTypeMapping TypeName="MitreAttackModel.Hardware_Additions">
+            <EntityTypeMapping TypeName="MitreModel.Hardware_Additions">
               <MappingFragment StoreEntitySet="Hardware_Additions">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="result" ColumnName="result" />
                 <ScalarProperty Name="checked_device" ColumnName="checked_device" />
-                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
                 <ScalarProperty Name="date" ColumnName="date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Harmful_Applications">
-            <EntityTypeMapping TypeName="MitreAttackModel.Harmful_Applications">
+            <EntityTypeMapping TypeName="MitreModel.Harmful_Applications">
               <MappingFragment StoreEntitySet="Harmful_Applications">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MAC_Addresses">
+            <EntityTypeMapping TypeName="MitreModel.MAC_Addresses">
+              <MappingFragment StoreEntitySet="MAC_Addresses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="mac_address" ColumnName="mac_address" />
+                <ScalarProperty Name="date" ColumnName="date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

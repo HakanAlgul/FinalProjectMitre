@@ -16,8 +16,9 @@ namespace FinalProjectMitre.Models
     {
         public int id { get; set; }
         public string result { get; set; }
-        public string filename { get; set; }
-        public string username { get; set; }
+        public int customer_id { get; set; }
         public System.DateTime date { get; set; }
+    
+        public virtual Customers Customers { get; set; }
     }
 }

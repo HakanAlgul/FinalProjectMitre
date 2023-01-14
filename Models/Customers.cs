@@ -14,12 +14,23 @@ namespace FinalProjectMitre.Models
     
     public partial class Customers
     {
-        public int customer_id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Customers()
+        {
+            this.Credentials_From_Password_Stores = new HashSet<Credentials_From_Password_Stores>();
+            this.Hardware_Additions = new HashSet<Hardware_Additions>();
+        }
+    
+        public int id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
         public int account_id { get; set; }
     
         public virtual Accounts Accounts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Credentials_From_Password_Stores> Credentials_From_Password_Stores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Hardware_Additions> Hardware_Additions { get; set; }
     }
 }
