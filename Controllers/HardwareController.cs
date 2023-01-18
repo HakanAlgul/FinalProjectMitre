@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
+using System.Web.Security;
+using System.Runtime.InteropServices;
 
 namespace FinalProjectMitre
 {
@@ -60,14 +62,30 @@ namespace FinalProjectMitre
         {
             try
             {
+                string username = HttpContext.User.Identity.Name;
+                Accounts account = db.Accounts.Where(a => a.username == username).FirstOrDefault();
+                Customers customer = db.Customers.Where(c => c.account_id == account.id).FirstOrDefault();
+                Hardware_Additions hardwareTest = new Hardware_Additions();
+                hardwareTest.checked_device = mac;
                 string isMacSafe = checkMac(mac);
-                return View(isMacSafe);
+                hardwareTest.result = isMacSafe;
+                hardwareTest.customer_id = customer.id;
+                DateTime now = DateTime.Now;
+                hardwareTest.date = now;
+                Hardware_Additions newHardwareTest = db.Hardware_Additions.Add(hardwareTest);
+                db.SaveChanges();
+                return View(newHardwareTest);
             }
             catch (Exception)
             {
                 string isMacSafe = "failed";
                 return View(isMacSafe);
             }
+        }
+
+        public ActionResult Failed()
+        {
+            return View();
         }
     }
 }

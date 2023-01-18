@@ -1,7 +1,35 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-}
+﻿@{ ViewBag.Title = "Index"; }
 
-<h2>Index</h2>
+<div class="text-center">
+    <h2>Hardware Additions</h2>
+</div>
+<div class="card">
+    <h5 class="card-header">MITRE ATT&CK Using</h5>
+    <div class="card-body">
+        <div class="container">
+            <img class="w-50" src="~/Content/img/wire.PNG" />
 
+            <h5 class="card-title mt-4">Hardware Additions</h5>
+            <p class="card-text">
+                Adversaries may introduce computer accessories, networking hardware, or other computing devices into a system or network that can be used as a
+                vector to gain access. Rather than just connecting and distributing payloads via removable storage (i.e. Replication Through Removable Media),
+                more robust hardware additions can be used to introduce new functionalities and/or features into a system that can then be abused.
+                While public references of usage by threat actors are scarce, many red teams/penetration testers leverage hardware additions for initial access.
+                Commercial and open source products can be leveraged with capabilities such as passive network tapping, network traffic modification
+                (i.e. Adversary-in-the-Middle), keystroke injection, kernel memory reading via DMA, addition of new wireless access to an existing network,
+                and others.
+
+            </p>
+            <p class="card-text">
+                DarkVishnya is a financially motivated threat actor targeting financial institutions in Eastern Europe. In 2017-2018 the group attacked at least 8 banks in this region. <br />
+                Adversaries may use brute force techniques to gain access to accounts when passwords are unknown or when password hashes are obtained. Without knowledge of the password
+                for an account or set of accounts, an adversary may systematically guess the password using a repetitive or iterative mechanism. Brute forcing passwords can take place
+                via interaction with a service that will check the validity of those credentials or offline against previously acquired credential data, such as password hashes.
+                Brute forcing credentials may take place at various points during a breach. For example, adversaries may attempt to brute force access to Valid Accounts within a victim
+                environment leveraging knowledge gathered from other post-compromise behaviors such as OS Credential Dumping, Account Discovery, or Password Policy Discovery. Adversaries
+                may also combine brute forcing activity with behaviors such as External Remote Services as part of Initial Access.
+            </p>
+            <a href="/Hardware/Test" class="btn btn-primary">Test It</a>
+        </div>
+    </div>
+</div>

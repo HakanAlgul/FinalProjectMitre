@@ -1,7 +1,58 @@
-﻿
-@{
-    ViewBag.Title = "Test";
+﻿@model FinalProjectMitre.Models.Hardware_Additions
+@{ ViewBag.Title = "Test";
 }
 
-<h2>Test</h2>
 
+<div class="container bg-dark text-light rounded-sm p-5">
+    <div class="text-center text-danger p-4">
+        <h2>Hardware Additions Test</h2>
+        <img src="~/Content/img/cyberSec.PNG" width="400px" />
+    </div>
+
+    <div class="text-center p-4">
+        <p>For the Hardware Addition Test, please enter the MAC address of the device on your network.</p>
+    </div>
+    <form action="/Hardware/Test" method="post">
+        <div class="input-group mb-3 p-4">
+            <input type="text" class="form-control" placeholder="MAC Address.." name="mac" id="mac" aria-label="MAC Address" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-outline-success" type="submit" id="button-addon2">Test It</button>
+            </div>
+        </div>
+        <div>
+            @if (Model != null)
+            {
+                <div>
+                    <h1>Result</h1>
+
+                    @if (Model.result == "safe")
+                    {
+                        <div class="alert alert-success" role="alert">
+                            Safe MAC address, no need to worry.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            You should take precautions urgently not a safe device!
+                            Establish network access control policies, such as using device certificates and the 802.1x standard.
+                            Restrict use of DHCP to registered devices to prevent unregistered devices from communicating with trusted systems.
+                        </div>
+                    }
+                </div>
+                if (Model.result == "safe")
+                {
+                    <div class="alert alert-success" role="alert">
+                        <h4>@Model.checked_device</h4>
+                    </div>
+                }
+                else
+                {
+                <div class="alert alert-danger" role="alert">
+                    <h4>@Model.checked_device</h4>
+                </div>
+                }
+            }
+        </div>
+    </form>
+</div>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MitreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MitreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="id" />
@@ -30,6 +30,7 @@
           <Property Name="result" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="customer_id" Type="int" Nullable="false" />
           <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="test_number" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -66,18 +67,6 @@
           <Property Name="mac_address" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="date" Type="date" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Credentials_From_Password_Stores_Customers">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
-          <End Role="Credentials_From_Password_Stores" Type="Self.Credentials_From_Password_Stores" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Credentials_From_Password_Stores">
-              <PropertyRef Name="customer_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Customers_Accounts">
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -112,10 +101,6 @@
           <EntitySet Name="Hardware_Additions" EntityType="Self.Hardware_Additions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Harmful_Applications" EntityType="Self.Harmful_Applications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MAC_Addresses" EntityType="Self.MAC_Addresses" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Credentials_From_Password_Stores_Customers" Association="Self.FK_Credentials_From_Password_Stores_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Credentials_From_Password_Stores" EntitySet="Credentials_From_Password_Stores" />
-          </AssociationSet>
           <AssociationSet Name="FK_Customers_Accounts" Association="Self.FK_Customers_Accounts">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="Customers" EntitySet="Customers" />
@@ -125,8 +110,7 @@
             <End Role="Hardware_Additions" EntitySet="Hardware_Additions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MitreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -157,6 +141,7 @@
           <Property Name="customer_id" Type="Int32" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Credentials_From_Password_Stores_Customers" FromRole="Credentials_From_Password_Stores" ToRole="Customers" />
+          <Property Name="test_number" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -284,6 +269,7 @@
           <EntitySetMapping Name="Credentials_From_Password_Stores">
             <EntityTypeMapping TypeName="MitreModel.Credentials_From_Password_Stores">
               <MappingFragment StoreEntitySet="Credentials_From_Password_Stores">
+                <ScalarProperty Name="test_number" ColumnName="test_number" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="result" ColumnName="result" />
                 <ScalarProperty Name="customer_id" ColumnName="customer_id" />

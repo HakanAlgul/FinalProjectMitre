@@ -18,6 +18,7 @@ namespace FinalProjectMitre.Models
         public string result { get; set; }
         public int customer_id { get; set; }
         public System.DateTime date { get; set; }
+        public int test_number { get; set; }
     
         public virtual Customers Customers { get; set; }
     }
